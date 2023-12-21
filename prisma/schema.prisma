@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
@@ -24,6 +25,8 @@ model Owner {
   ownership  Ownership[]
   user       User        @relation(fields: [userId], references: [id])
   userId     Int
+
+  @@index([userId])
 }
 
 model Renter {
@@ -32,6 +35,8 @@ model Renter {
   user     User       @relation(fields: [userId], references: [id])
   userId   Int
   Contract Contract[]
+
+  @@index([userId])
 }
 
 model Property {
@@ -43,6 +48,8 @@ model Property {
   user      User           @relation(fields: [userId], references: [id])
   userId    Int
   Contract  Contract[]
+
+  @@index([userId])
 }
 
 model Ownership {
@@ -55,6 +62,10 @@ model Ownership {
   userId      Int
   propertyId  Int
   ownerId     Int
+
+  @@index([ownerId])
+  @@index([propertyId])
+  @@index([userId])
 }
 
 model Contract {
@@ -67,6 +78,9 @@ model Contract {
   endDate    DateTime
   propertyId Int
   renterId   Int
+
+  @@index([propertyId])
+  @@index([renterId])
 }
 
 enum PropertyStatus {
