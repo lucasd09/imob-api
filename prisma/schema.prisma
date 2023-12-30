@@ -22,6 +22,7 @@ model User {
 model Owner {
   id         Int         @id @default(autoincrement())
   name       String
+  email      String
   properties Property[]  @relation("Ownership")
   ownership  Ownership[]
   user       User        @relation(fields: [userId], references: [id])
@@ -31,9 +32,9 @@ model Owner {
 }
 
 model Renter {
-  id   Int    @id @default(autoincrement())
-  name String
-
+  id       Int        @id @default(autoincrement())
+  name     String
+  email    String
   user     User       @relation(fields: [userId], references: [id])
   userId   Int
   Contract Contract[]
