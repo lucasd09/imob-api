@@ -100,6 +100,11 @@ model Contract {
   @@index([userId])
 }
 
+model Billing {
+  id   Int         @id @default(autoincrement())
+  type BillingType
+}
+
 enum PropertyStatus {
   AVAILABLE
   RENTED
@@ -114,4 +119,9 @@ enum ContractStatus {
 enum TipoPessoa {
   FISICA
   JURIDICA
+}
+
+enum BillingType {
+  RECEIVE
+  PAY
 }
