@@ -17,6 +17,7 @@ model User {
   Renter    Renter[]
   Property  Property[]
   Ownership Ownership[]
+  Contract  Contract[]
 }
 
 model Owner {
@@ -85,15 +86,18 @@ model Contract {
   id         Int            @id @default(autoincrement())
   property   Property       @relation(fields: [propertyId], references: [id])
   renter     Renter         @relation(fields: [renterId], references: [id])
+  user       User           @relation(fields: [userId], references: [id])
   value      Float
   status     ContractStatus
   startDate  DateTime
   endDate    DateTime
   propertyId Int
   renterId   Int
+  userId     Int
 
   @@index([propertyId])
   @@index([renterId])
+  @@index([userId])
 }
 
 enum PropertyStatus {

@@ -13,15 +13,15 @@ export class RentersService {
     return this.prisma.renter.findMany({ where: { userId } });
   }
 
-  findOne(id, userId: number) {
+  findOne(id: number, userId: number) {
     return this.prisma.renter.findUnique({ where: { id, userId } });
   }
 
-  update(id, userId: number, data: UpdateRenterDto) {
+  update(id: number, userId: number, data: UpdateRenterDto) {
     return this.prisma.renter.update({ data, where: { id, userId } });
   }
 
-  remove(id, userId: number) {
+  remove(id: number, userId: number) {
     return this.prisma.renter.delete({ where: { id, userId } });
   }
 }

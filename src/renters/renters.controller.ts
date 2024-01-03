@@ -36,14 +36,14 @@ export class RentersController {
   @Patch(':userId/:id')
   update(
     @Param('userId') userId: number,
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateRenterDto: UpdateRenterDto,
   ) {
     return this.rentersService.update(id, userId, updateRenterDto);
   }
 
   @Delete(':userId/:id')
-  remove(@Param('userId') userId: number, @Param('id') id: string) {
+  remove(@Param('userId') userId: number, @Param('id') id: number) {
     return this.rentersService.remove(id, userId);
   }
 }
