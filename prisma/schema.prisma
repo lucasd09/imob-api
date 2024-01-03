@@ -23,6 +23,11 @@ model Owner {
   id         Int         @id @default(autoincrement())
   name       String
   email      String
+  cnpjcpf    String
+  ierg       String
+  phone      String
+  pessoa     TipoPessoa
+  birthdate  DateTime
   properties Property[]  @relation("Ownership")
   ownership  Ownership[]
   user       User        @relation(fields: [userId], references: [id])
@@ -32,12 +37,17 @@ model Owner {
 }
 
 model Renter {
-  id       Int        @id @default(autoincrement())
-  name     String
-  email    String
-  user     User       @relation(fields: [userId], references: [id])
-  userId   Int
-  Contract Contract[]
+  id        Int        @id @default(autoincrement())
+  name      String
+  email     String
+  cnpjcpf   String
+  ierg      String
+  phone     String
+  pessoa    TipoPessoa
+  birthdate DateTime
+  user      User       @relation(fields: [userId], references: [id])
+  userId    Int
+  Contract  Contract[]
 
   @@index([userId])
 }
@@ -95,4 +105,9 @@ enum ContractStatus {
   EDITING
   ACTIVE
   CLOSED
+}
+
+enum TipoPessoa {
+  FISICA
+  JURIDICA
 }

@@ -1,10 +1,15 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { Prisma } from '@prisma/client';
+import { $Enums, Prisma } from '@prisma/client';
 
 export class CreateRenterDto implements Prisma.RenterCreateInput {
   user: Prisma.UserCreateNestedOneWithoutRenterInput;
   name: string;
   email: string;
+  cnpjcpf: string;
+  ierg: string;
+  phone: string;
+  pessoa: $Enums.TipoPessoa;
+  birthdate: string | Date;
   Contract?: Prisma.ContractCreateNestedManyWithoutRenterInput;
 }
 
