@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOwnerDto, UpdateOwnerDto } from './dto/owner.dto';
 import { PrismaService } from 'src/prisma.service';
+import { parse } from 'date-fns';
 
 @Injectable()
 export class OwnersService {
   constructor(private prisma: PrismaService) {}
   create(data: CreateOwnerDto) {
+    data.birthdate = parse(
+      data.birthdate,
+      'yyyy-MM-dd',
+      new Date(),
+    ).toISOString();
     return this.prisma.owner.create({ data });
   }
 

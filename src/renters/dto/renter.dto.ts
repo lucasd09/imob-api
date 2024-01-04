@@ -9,7 +9,7 @@ export class CreateRenterDto implements Prisma.RenterCreateInput {
   ierg: string;
   phone: string;
   pessoa: $Enums.TipoPessoa;
-  birthdate: string | Date;
+  birthdate: string;
   Contract?: Prisma.ContractCreateNestedManyWithoutRenterInput;
 }
 
