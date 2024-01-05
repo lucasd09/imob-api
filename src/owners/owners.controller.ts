@@ -35,8 +35,8 @@ export class OwnersController {
 
   @Patch(':userId/:id')
   update(
-    @Param('userId') userId: number,
-    @Param('id') id: number,
+    @Param('userId') userId: string,
+    @Param('id') id: string,
     @Body() updateOwnerDto: UpdateOwnerDto,
   ) {
     return this.ownersService.update(id, userId, updateOwnerDto);

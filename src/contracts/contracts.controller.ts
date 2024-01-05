@@ -6,11 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ContractsService } from './contracts.service';
 import { CreateContractDto, UpdateContractDto } from './dto/contract.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
 
 @Controller('contracts')
+@UseGuards(JwtAuthGuard)
 export class ContractsController {
   constructor(private readonly contractsService: ContractsService) {}
 

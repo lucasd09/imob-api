@@ -18,7 +18,10 @@ export class AuthService {
       const isPasswordValid = await bcrypt.compare(password, user.password);
 
       if (isPasswordValid) {
-        return { ...user, password: undefined };
+        if (user.access) {
+          return { ...user, password: undefined };
+        }
+        throw new Error('User access was denied');
       }
     }
     throw new Error('Incorrect email or Password');

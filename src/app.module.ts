@@ -7,9 +7,10 @@ import { RentersModule } from './renters/renters.module';
 import { OwnersModule } from './owners/owners.module';
 import { PropertiesModule } from './properties/properties.module';
 import { ContractsModule } from './contracts/contracts.module';
+import { BillingsModule } from './billings/billings.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, RentersModule, OwnersModule, PropertiesModule, ContractsModule],
+  imports: [UsersModule, AuthModule, RentersModule, OwnersModule, PropertiesModule, ContractsModule, BillingsModule],
   controllers: [AppController],
   providers: [AppService],
 })

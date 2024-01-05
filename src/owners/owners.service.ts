@@ -23,8 +23,11 @@ export class OwnersService {
     return this.prisma.owner.findUnique({ where: { id, userId } });
   }
 
-  update(id: number, userId: number, data: UpdateOwnerDto) {
-    return this.prisma.owner.update({ data, where: { id, userId } });
+  update(id: string, userId: string, data: UpdateOwnerDto) {
+    return this.prisma.owner.update({
+      data,
+      where: { id: parseInt(id), userId: parseInt(userId) },
+    });
   }
 
   remove(id: number, userId: number) {

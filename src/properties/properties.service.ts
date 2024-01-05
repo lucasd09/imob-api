@@ -1,12 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto/property.dto';
 import { PrismaService } from 'src/prisma.service';
+import { CreateOwnershipDto } from './dto/ownership.dto';
 
 @Injectable()
 export class PropertiesService {
   constructor(private prisma: PrismaService) {}
   create(data: CreatePropertyDto) {
     return this.prisma.property.create({ data });
+  }
+
+  addOwnership(data: CreateOwnershipDto) {
+    return this.prisma.ownership.createMany({ data });
   }
 
   findAll(userId: number) {

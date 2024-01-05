@@ -9,7 +9,6 @@ export class CreateOwnerDto implements Prisma.OwnerCreateInput {
   phone: string;
   pessoa: $Enums.TipoPessoa;
   birthdate: string;
-  properties?: Prisma.PropertyCreateNestedManyWithoutOwnersInput;
   ownership?: Prisma.OwnershipCreateNestedManyWithoutOwnerInput;
   user: Prisma.UserCreateNestedOneWithoutOwnerInput;
 }

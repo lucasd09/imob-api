@@ -23,18 +23,17 @@ model User {
 }
 
 model Owner {
-  id         Int         @id @default(autoincrement())
-  user       User        @relation(fields: [userId], references: [id])
-  properties Property[]  @relation("Ownership")
-  ownership  Ownership[]
-  name       String
-  email      String
-  cnpjcpf    String
-  ierg       String
-  phone      String
-  pessoa     TipoPessoa
-  birthdate  DateTime
-  userId     Int
+  id        Int         @id @default(autoincrement())
+  user      User        @relation(fields: [userId], references: [id])
+  ownership Ownership[]
+  name      String
+  email     String
+  cnpjcpf   String
+  ierg      String
+  phone     String
+  pessoa    TipoPessoa
+  birthdate DateTime
+  userId    Int
 
   @@index([userId])
 }
@@ -58,11 +57,11 @@ model Renter {
 model Property {
   id        Int         @id @default(autoincrement())
   user      User        @relation(fields: [userId], references: [id])
-  owners    Owner[]     @relation("Ownership")
   ownership Ownership[]
   Contract  Contract[]
   address   String
-  available Boolean
+  number    Int
+  avaliable Boolean
   userId    Int
 
   @@index([userId])
@@ -117,11 +116,12 @@ model Billing {
 }
 
 model Installment {
-  id      Int      @id @default(autoincrement())
-  billing Billing  @relation(fields: [billingId], references: [id])
-  value   Float
-  dueDate DateTime
-
+  id        Int      @id @default(autoincrement())
+  billing   Billing  @relation(fields: [billingId], references: [id])
+  number    Int
+  value     Float
+  dueDate   DateTime
+  paid      Boolean
   billingId Int
 
   @@index([billingId])
