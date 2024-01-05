@@ -13,15 +13,20 @@ model User {
   email     String      @unique
   name      String
   password  String
+  access    Boolean
   Owner     Owner[]
   Renter    Renter[]
   Property  Property[]
   Ownership Ownership[]
   Contract  Contract[]
+  Billing   Billing[]
 }
 
 model Owner {
   id         Int         @id @default(autoincrement())
+  user       User        @relation(fields: [userId], references: [id])
+  properties Property[]  @relation("Ownership")
+  ownership  Ownership[]
   name       String
   email      String
   cnpjcpf    String
@@ -29,9 +34,6 @@ model Owner {
   phone      String
   pessoa     TipoPessoa
   birthdate  DateTime
-  properties Property[]  @relation("Ownership")
-  ownership  Ownership[]
-  user       User        @relation(fields: [userId], references: [id])
   userId     Int
 
   @@index([userId])
@@ -39,6 +41,8 @@ model Owner {
 
 model Renter {
   id        Int        @id @default(autoincrement())
+  user      User       @relation(fields: [userId], references: [id])
+  Contract  Contract[]
   name      String
   email     String
   cnpjcpf   String
@@ -46,33 +50,31 @@ model Renter {
   phone     String
   pessoa    TipoPessoa
   birthdate DateTime
-  user      User       @relation(fields: [userId], references: [id])
   userId    Int
-  Contract  Contract[]
 
   @@index([userId])
 }
 
 model Property {
-  id        Int            @id @default(autoincrement())
-  address   String
-  status    PropertyStatus
-  owners    Owner[]        @relation("Ownership")
+  id        Int         @id @default(autoincrement())
+  user      User        @relation(fields: [userId], references: [id])
+  owners    Owner[]     @relation("Ownership")
   ownership Ownership[]
-  user      User           @relation(fields: [userId], references: [id])
-  userId    Int
   Contract  Contract[]
+  address   String
+  available Boolean
+  userId    Int
 
   @@index([userId])
 }
 
 model Ownership {
   id          Int      @id @default(autoincrement())
-  cut         Float
-  isMainOwner Boolean
   property    Property @relation(fields: [propertyId], references: [id])
   owner       Owner    @relation(fields: [ownerId], references: [id])
   user        User     @relation(fields: [userId], references: [id])
+  cut         Float
+  isMainOwner Boolean
   userId      Int
   propertyId  Int
   ownerId     Int
@@ -87,6 +89,7 @@ model Contract {
   property   Property       @relation(fields: [propertyId], references: [id])
   renter     Renter         @relation(fields: [renterId], references: [id])
   user       User           @relation(fields: [userId], references: [id])
+  Billing    Billing[]
   value      Float
   status     ContractStatus
   startDate  DateTime
@@ -101,13 +104,27 @@ model Contract {
 }
 
 model Billing {
-  id   Int         @id @default(autoincrement())
-  type BillingType
+  id           Int           @id @default(autoincrement())
+  contract     Contract      @relation(fields: [contractId], references: [id])
+  user         User          @relation(fields: [userId], references: [id])
+  type         BillingType
+  installments Installment[]
+  contractId   Int
+  userId       Int
+
+  @@index([contractId])
+  @@index([userId])
 }
 
-enum PropertyStatus {
-  AVAILABLE
-  RENTED
+model Installment {
+  id      Int      @id @default(autoincrement())
+  billing Billing  @relation(fields: [billingId], references: [id])
+  value   Float
+  dueDate DateTime
+
+  billingId Int
+
+  @@index([billingId])
 }
 
 enum ContractStatus {
@@ -122,6 +139,6 @@ enum TipoPessoa {
 }
 
 enum BillingType {
-  RECEIVE
-  PAY
+  RENT
+  INSURANCE
 }
