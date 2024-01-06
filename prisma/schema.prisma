@@ -76,7 +76,7 @@ model Ownership {
   isMainOwner Boolean
   userId      Int
   propertyId  Int
-  ownerId     Int
+  ownerId     Int      @unique
 
   @@index([ownerId])
   @@index([propertyId])
