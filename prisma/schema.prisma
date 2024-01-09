@@ -55,14 +55,19 @@ model Renter {
 }
 
 model Property {
-  id        Int         @id @default(autoincrement())
-  user      User        @relation(fields: [userId], references: [id])
-  ownership Ownership[]
-  Contract  Contract[]
-  address   String
-  number    Int
-  avaliable Boolean
-  userId    Int
+  id         Int         @id @default(autoincrement())
+  user       User        @relation(fields: [userId], references: [id])
+  ownership  Ownership[]
+  Contract   Contract[]
+  address    String
+  number     Int
+  zipcode    String
+  city       String
+  district   String
+  complement String
+  uf         String
+  avaliable  Boolean
+  userId     Int
 
   @@index([userId])
 }
