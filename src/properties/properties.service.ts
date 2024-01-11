@@ -18,10 +18,7 @@ export class PropertiesService {
     return this.prisma.ownership.findMany({
       select: {
         owner: {
-          select: {
-            id: true,
-            name: true,
-          },
+          select: { id: true, name: true },
         },
         cut: true,
         isMainOwner: true,

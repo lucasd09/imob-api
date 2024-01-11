@@ -10,7 +10,21 @@ export class ContractsService {
   }
 
   findAll(userId: number) {
-    return this.prisma.contract.findMany({ where: { userId } });
+    return this.prisma.contract.findMany({
+      select: {
+        id: true,
+        property: {
+          select: { address: true, number: true },
+        },
+        renter: {
+          select: { name: true },
+        },
+        status: true,
+        startDate: true,
+        endDate: true,
+      },
+      where: { userId },
+    });
   }
 
   findOne(id: number, userId: number) {
