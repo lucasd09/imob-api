@@ -14,6 +14,22 @@ export class PropertiesService {
     return this.prisma.ownership.createMany({ data });
   }
 
+  getOwnerships(userId: number, propertyId: number) {
+    return this.prisma.ownership.findMany({
+      select: {
+        owner: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        cut: true,
+        isMainOwner: true,
+      },
+      where: { userId, propertyId },
+    });
+  }
+
   findAll(userId: number) {
     return this.prisma.property.findMany({ where: { userId } });
   }

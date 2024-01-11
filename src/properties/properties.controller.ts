@@ -28,6 +28,17 @@ export class PropertiesController {
     return this.propertiesService.addOwnership(createOwnershipDto);
   }
 
+  @Get('ownerships/:userId/:propertyId')
+  getOwnerships(
+    @Param('userId') userId: string,
+    @Param('propertyId') propertyId: string,
+  ) {
+    return this.propertiesService.getOwnerships(
+      parseInt(userId),
+      parseInt(propertyId),
+    );
+  }
+
   @Get(':userId')
   findAll(@Param('userId') userId: string) {
     const id = parseInt(userId);
@@ -41,11 +52,15 @@ export class PropertiesController {
 
   @Patch(':userId/:id')
   update(
-    @Param('userId') userId: number,
-    @Param('id') id: number,
+    @Param('userId') userId: string,
+    @Param('id') id: string,
     @Body() updatePropertyDto: UpdatePropertyDto,
   ) {
-    return this.propertiesService.update(id, userId, updatePropertyDto);
+    return this.propertiesService.update(
+      parseInt(id),
+      parseInt(userId),
+      updatePropertyDto,
+    );
   }
 
   @Delete(':userId/:id')
