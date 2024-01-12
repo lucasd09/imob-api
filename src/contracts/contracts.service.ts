@@ -28,7 +28,38 @@ export class ContractsService {
   }
 
   findOne(id: number, userId: number) {
-    return this.prisma.contract.findUnique({ where: { id, userId } });
+    return this.prisma.contract.findUnique({
+      select: {
+        id: true,
+        value: true,
+        status: true,
+        startDate: true,
+        endDate: true,
+        property: {
+          select: {
+            address: true,
+            number: true,
+            complement: true,
+            district: true,
+            city: true,
+            uf: true,
+            ownership: {
+              select: {
+                owner: {
+                  select: { id: true, name: true },
+                },
+                cut: true,
+                isMainOwner: true,
+              },
+            },
+          },
+        },
+        renter: {
+          select: { name: true, email: true, phone: true },
+        },
+      },
+      where: { id, userId },
+    });
   }
 
   update(id: number, userId: number, data: UpdateContractDto) {
