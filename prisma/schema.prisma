@@ -98,6 +98,7 @@ model Contract {
   status     ContractStatus
   startDate  DateTime
   endDate    DateTime
+  dueDate    DateTime
   propertyId Int
   renterId   Int
   userId     Int
