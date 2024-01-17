@@ -29,6 +29,7 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() data: UpdateUserDto) {
     return this.usersService.update({ where: { id: parseInt(id) }, data });
   }
