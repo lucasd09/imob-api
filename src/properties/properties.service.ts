@@ -17,6 +17,7 @@ export class PropertiesService {
   getOwnerships(userId: number, propertyId: number) {
     return this.prisma.ownership.findMany({
       select: {
+        id: true,
         owner: {
           select: { id: true, name: true },
         },
@@ -25,6 +26,10 @@ export class PropertiesService {
       },
       where: { userId, propertyId },
     });
+  }
+
+  deleteOwnership(id: number) {
+    return this.prisma.ownership.delete({ where: { id } });
   }
 
   findAll(userId: number) {

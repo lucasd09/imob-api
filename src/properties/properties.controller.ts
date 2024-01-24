@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 import { PropertiesService } from './properties.service';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto/property.dto';
@@ -23,7 +24,7 @@ export class PropertiesController {
     return this.propertiesService.create(createPropertyDto);
   }
 
-  @Post('ownership')
+  @Post('ownerships')
   addOwnership(@Body() createOwnershipDto: CreateOwnershipDto) {
     return this.propertiesService.addOwnership(createOwnershipDto);
   }
@@ -37,6 +38,12 @@ export class PropertiesController {
       parseInt(userId),
       parseInt(propertyId),
     );
+  }
+
+  @Delete('ownerships/:id')
+  @HttpCode(204)
+  deleteOwnership(@Param('id') id: string) {
+    return this.propertiesService.deleteOwnership(parseInt(id));
   }
 
   @Get(':userId')
