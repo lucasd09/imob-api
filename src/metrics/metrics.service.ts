@@ -5,9 +5,9 @@ import { PrismaService } from 'src/prisma.service';
 export class MetricsService {
   constructor(private prisma: PrismaService) {}
 
-  async activeContracts() {
+  async activeContracts(userId: number) {
     const contracts = await this.prisma.contract.count({
-      where: { status: 'ACTIVE' },
+      where: { status: 'ACTIVE', userId },
     });
 
     return contracts;

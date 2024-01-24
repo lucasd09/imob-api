@@ -37,6 +37,7 @@ export class ContractsService {
         endDate: true,
         property: {
           select: {
+            id: true,
             address: true,
             number: true,
             complement: true,
@@ -55,7 +56,7 @@ export class ContractsService {
           },
         },
         renter: {
-          select: { name: true, email: true, phone: true },
+          select: { id: true, name: true, email: true, phone: true },
         },
       },
       where: { id, userId },

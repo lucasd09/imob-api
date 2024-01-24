@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { MetricsService } from './metrics.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
 
@@ -7,8 +7,8 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
 export class MetricsController {
   constructor(private readonly metricsService: MetricsService) {}
 
-  @Get('/contracts')
-  activeContracts() {
-    return this.metricsService.activeContracts();
+  @Get('/contracts/:userId')
+  activeContracts(@Param('userId') userId: string) {
+    return this.metricsService.activeContracts(parseInt(userId));
   }
 }
