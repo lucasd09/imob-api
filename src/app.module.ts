@@ -8,9 +8,19 @@ import { OwnersModule } from './owners/owners.module';
 import { PropertiesModule } from './properties/properties.module';
 import { ContractsModule } from './contracts/contracts.module';
 import { BillingsModule } from './billings/billings.module';
+import { MetricsModule } from './metrics/metrics.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, RentersModule, OwnersModule, PropertiesModule, ContractsModule, BillingsModule],
+  imports: [
+    UsersModule,
+    AuthModule,
+    RentersModule,
+    OwnersModule,
+    PropertiesModule,
+    ContractsModule,
+    BillingsModule,
+    MetricsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
