@@ -35,6 +35,7 @@ export class ContractsService {
         status: true,
         startDate: true,
         endDate: true,
+        dueDate: true,
         property: {
           select: {
             id: true,

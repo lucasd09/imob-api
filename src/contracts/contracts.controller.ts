@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 import { ContractsService } from './contracts.service';
 import { CreateContractDto, UpdateContractDto } from './dto/contract.dto';
@@ -35,15 +36,20 @@ export class ContractsController {
 
   @Patch(':userId/:id')
   update(
-    @Param('userId') userId: number,
-    @Param('id') id: number,
+    @Param('userId') userId: string,
+    @Param('id') id: string,
     @Body() updateContractDto: UpdateContractDto,
   ) {
-    return this.contractsService.update(id, userId, updateContractDto);
+    return this.contractsService.update(
+      parseInt(id),
+      parseInt(userId),
+      updateContractDto,
+    );
   }
 
   @Delete(':userId/:id')
-  remove(@Param('userId') userId: number, @Param('id') id: number) {
-    return this.contractsService.remove(id, userId);
+  @HttpCode(204)
+  remove(@Param('userId') userId: string, @Param('id') id: string) {
+    return this.contractsService.remove(parseInt(id), parseInt(userId));
   }
 }

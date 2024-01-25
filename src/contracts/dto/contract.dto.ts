@@ -1,4 +1,3 @@
-import { PartialType } from '@nestjs/mapped-types';
 import { $Enums, Prisma } from '@prisma/client';
 
 export class CreateContractDto implements Prisma.ContractCreateInput {
@@ -13,4 +12,4 @@ export class CreateContractDto implements Prisma.ContractCreateInput {
   renter: Prisma.RenterCreateNestedOneWithoutContractInput;
 }
 
-export class UpdateContractDto extends PartialType(CreateContractDto) {}
+export class UpdateContractDto implements Prisma.ContractUpdateInput {}
