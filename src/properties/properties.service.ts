@@ -11,7 +11,7 @@ export class PropertiesService {
   }
 
   addOwnership(data: CreateOwnershipDto) {
-    return this.prisma.ownership.createMany({ data });
+    return this.prisma.ownership.create({ data });
   }
 
   getOwnerships(userId: number, propertyId: number) {

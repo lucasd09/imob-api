@@ -13,6 +13,7 @@ import { PropertiesService } from './properties.service';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto/property.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
 import { CreateOwnershipDto } from './dto/ownership.dto';
+import { OwnershipMiddleware } from 'src/middleware/ownership.middleware';
 
 @Controller('properties')
 @UseGuards(JwtAuthGuard)
@@ -25,6 +26,7 @@ export class PropertiesController {
   }
 
   @Post('ownerships')
+  @UseGuards(OwnershipMiddleware)
   addOwnership(@Body() createOwnershipDto: CreateOwnershipDto) {
     return this.propertiesService.addOwnership(createOwnershipDto);
   }
