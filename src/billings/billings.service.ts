@@ -24,4 +24,15 @@ export class BillingsService {
   remove(id: number, userId: number) {
     return this.prisma.billing.delete({ where: { id, userId } });
   }
+
+  findInstallments(billingId: number) {
+    return this.prisma.installment.findMany({ where: { billingId } });
+  }
+
+  findByContract(contractId: number, userId: number) {
+    return this.prisma.billing.findMany({
+      include: { installments: true },
+      where: { contractId, userId },
+    });
+  }
 }

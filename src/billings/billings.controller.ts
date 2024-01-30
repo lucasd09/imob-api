@@ -33,13 +33,18 @@ export class BillingsController {
     return this.billingsService.findOne(parseInt(id), parseInt(userId));
   }
 
+  @Get('/installments/:userId/:id')
+  findInstallments(@Param('userId') userId: string, @Param('id') id: string) {
+    return this.billingsService.findByContract(parseInt(id), parseInt(userId));
+  }
+
   @Patch(':userId/:id')
   update(
     @Param('userId') userId: number,
     @Param('id') id: number,
-    @Body() updateRenterDto: UpdateBillingDto,
+    @Body() updateBillingDto: UpdateBillingDto,
   ) {
-    return this.billingsService.update(id, userId, updateRenterDto);
+    return this.billingsService.update(id, userId, updateBillingDto);
   }
 
   @Delete(':userId/:id')

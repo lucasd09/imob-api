@@ -8,33 +8,71 @@ export class ContractMiddleware implements NestMiddleware {
   constructor(private prisma: PrismaService) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    const {
-      user,
-      renter: _renter,
-      property: _property,
-    } = req.body as CreateContractDto;
+    switch (req.method) {
+      case 'POST': {
+        const {
+          user,
+          renter: _renter,
+          property: _property,
+        } = req.body as CreateContractDto;
 
-    try {
-      const renter = await this.prisma.renter.findUnique({
-        where: { id: _renter.connect.id },
-      });
-      const property = await this.prisma.owner.findUnique({
-        where: { id: _property.connect.id },
-      });
+        try {
+          const renter = await this.prisma.renter.findUnique({
+            where: { id: _renter.connect.id },
+          });
+          const property = await this.prisma.owner.findUnique({
+            where: { id: _property.connect.id },
+          });
 
-      if (
-        renter.userId !== user.connect.id ||
-        property.userId !== user.connect.id
-      ) {
-        return res.status(404).json({
-          message: 'Renter/Property not found in this tenant',
-        });
+          if (
+            renter.userId !== user.connect.id ||
+            property.userId !== user.connect.id
+          ) {
+            return res.status(404).json({
+              message: 'Renter/Property not found in this tenant',
+            });
+          }
+
+          next();
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ message: 'Internal Server Error' });
+        }
       }
+      case 'PATCH': {
+        const { renterId, propertyId } = req.body;
+        const { userId } = req.params;
 
-      next();
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Internal Server Error' });
+        try {
+          if (renterId) {
+            const renter = await this.prisma.renter.findUnique({
+              where: { id: renterId },
+            });
+
+            if (renter.userId !== parseInt(userId)) {
+              return res.status(404).json({
+                message: 'Renter not found in this tenant',
+              });
+            }
+          }
+
+          if (propertyId) {
+            const property = await this.prisma.property.findUnique({
+              where: { id: propertyId },
+            });
+
+            if (property.userId !== parseInt(userId)) {
+              return res.status(404).json({
+                message: 'Property not found in this tenant',
+              });
+            }
+          }
+          next();
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ message: 'Internal Server Error' });
+        }
+      }
     }
   }
 }
