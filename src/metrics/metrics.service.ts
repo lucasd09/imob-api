@@ -5,11 +5,19 @@ import { PrismaService } from 'src/prisma.service';
 export class MetricsService {
   constructor(private prisma: PrismaService) {}
 
-  async activeContracts(userId: number) {
-    const contracts = await this.prisma.contract.count({
+  async Contracts(userId: number) {
+    const editing = await this.prisma.contract.count({
+      where: { status: 'EDITING', userId },
+    });
+
+    const active = await this.prisma.contract.count({
       where: { status: 'ACTIVE', userId },
     });
 
-    return contracts;
+    const closed = await this.prisma.contract.count({
+      where: { status: 'CLOSED', userId },
+    });
+
+    return { editing, active, closed };
   }
 }

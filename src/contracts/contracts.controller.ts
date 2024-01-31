@@ -12,7 +12,6 @@ import {
 import { ContractsService } from './contracts.service';
 import { CreateContractDto, UpdateContractDto } from './dto/contract.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
-import { ContractMiddleware } from 'src/middleware/contract.middleware';
 
 @Controller('contracts')
 @UseGuards(JwtAuthGuard)
@@ -20,7 +19,6 @@ export class ContractsController {
   constructor(private readonly contractsService: ContractsService) {}
 
   @Post()
-  @UseGuards(ContractMiddleware)
   create(@Body() createContractDto: CreateContractDto) {
     return this.contractsService.create(createContractDto);
   }
@@ -37,7 +35,6 @@ export class ContractsController {
   }
 
   @Patch(':userId/:id')
-  @UseGuards(ContractMiddleware)
   update(
     @Param('userId') userId: string,
     @Param('id') id: string,

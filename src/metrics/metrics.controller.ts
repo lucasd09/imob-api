@@ -9,6 +9,6 @@ export class MetricsController {
 
   @Get('/contracts/:userId')
   activeContracts(@Param('userId') userId: string) {
-    return this.metricsService.activeContracts(parseInt(userId));
+    return this.metricsService.Contracts(parseInt(userId));
   }
 }

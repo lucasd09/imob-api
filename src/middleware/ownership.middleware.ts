@@ -15,7 +15,7 @@ export class OwnershipMiddleware implements NestMiddleware {
         where: { id: ownership.owner.connect.id },
       });
 
-      if (owner.id !== ownership.user.connect.id) {
+      if (owner.userId !== ownership.user.connect.id) {
         return res
           .status(404)
           .json({ message: 'Owner not Found in this tenant' });
